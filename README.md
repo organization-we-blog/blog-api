@@ -67,15 +67,10 @@ npm install
 运行
 
 ```shell
-npm run serve
+npm run test
 
-##为了方便各位大牛的相关，我们同样开启了dev脚本
-npm run dev
+#或者
+npm run ci
 ```
 
-git init 
-git add README.md 
-git commit -m“首次提交” 
-git remote add origin https://github.com/organization-we-blog/bolg-api.git
- git push -u原始主机
 
