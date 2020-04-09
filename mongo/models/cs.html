@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        th,td{
+            width: 100px;
+            text-align: center;
+            border: 1px #777777 solid;
+        }
+    </style>
+</head>
+<body>
+    <table id="table01">
+        <tr></tr>
+    </table>
+</body>
+<script>
+    let data = [
+        {name:"qq",age:19,sex:"男"},
+        {name:"ww",age:12,sex:"女"},
+        {name:"ee",age:20,sex:"男"},
+        {name:"rr",age:15,sex:"女"},
+        {name:"tt",age:12,sex:"女"},
+        {name:"yy",age:14,sex:"女"},
+        {name:"uu",age:12,sex:"男"},
+        {name:"ii",age:22,sex:"女"},
+        {name:"oo",age:20,sex:"男"}
+    ]
+    let table01 = document.getElementById("table01");
+    for(let i in data[0]){//动态生成表头，依据的是data中数据的字段
+        table01.getElementsByTagName("tr")[0].innerHTML += `<th>${i}</th>`
+    }
+
+    //动态生成tr数据
+    let trStr = ""
+    for (let i=0; i<data.length; i++){
+        trStr += "<tr>"
+        for(let j in data[i]){
+            trStr += `<td>${data[i][j]}</td>`
+        }
+        trStr += "</tr>"
+    }
+    table01.innerHTML += trStr
+</script>
+</html>
