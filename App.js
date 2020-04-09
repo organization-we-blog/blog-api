@@ -4,6 +4,7 @@ require('./mongoConn.js');//连接数据库
 
 const app = express();
 
+
 // 配置 body-parser
 // 只要 加入这个配置，则在 req 请求对象上会多出一个属性： body
 // 你可以通过 req.body 来获取表单POST请求体数据
