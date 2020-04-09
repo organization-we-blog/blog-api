@@ -8,7 +8,7 @@ mongoose.connect(uri, {//mongoDB连接不需要断开，全程保持连接状态
 });
 
 mongoose.connection.once("open",function(){
-    console.log("数据库连接中");
+    console.log("数据库连接成功");
 });
 
 mongoose.connection.on("error",function(){
@@ -16,5 +16,5 @@ mongoose.connection.on("error",function(){
 });
 
 mongoose.connection.once("close",function(){
-    console.log("数据库连接已经断开");
+    console.log("数据库连接断开");
 });
