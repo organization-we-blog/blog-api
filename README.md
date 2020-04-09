@@ -74,9 +74,6 @@ npm install
 
 ```shell
 npm run test
-
-#或者
-npm run ci
 ```
 
 
