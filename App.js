@@ -1,9 +1,8 @@
 const express = require("express");
-var bodyParser = require('body-parser')
+let bodyParser = require('body-parser')
 require('./mongoConn.js');//连接数据库
 
 const app = express();
-
 
 // 配置 body-parser
 // 只要 加入这个配置，则在 req 请求对象上会多出一个属性： body
