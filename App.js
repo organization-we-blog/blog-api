@@ -28,14 +28,10 @@ app.use("*",function(req,res,next){
 app.use('/public/',express.static('./public/'));
 app.use('/uploads/',express.static('./uploads/'));
 
-const router = require("./router").router;
-const article = require("./router").article;
+const {router, article,users } = require("./router");
 app.use(router);//挂载路由
 app.use(article);//挂载路由
-
-
-
-
+app.use(users);//挂载路由
 
 
 app.listen(3002,()=>{
