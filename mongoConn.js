@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+mongoose.set('useCreateIndex', true) 
+mongoose.set('useFindAndModify', false)
 const {USER_NAME,PASSWORD,HOST,PORT,DATABASE} = require("./config/index.js").DATABASE.READ_WRITE_USER;
 
 const uri = `mongodb://${USER_NAME}:${PASSWORD}@${HOST}:${PORT}/${DATABASE}`;

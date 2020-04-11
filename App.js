@@ -1,5 +1,7 @@
 const express = require("express");
 let bodyParser = require('body-parser')
+const  cookieParser = require('cookie-parser')
+
 require('./mongoConn.js');//连接数据库
 
 const app = express();
@@ -11,6 +13,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use("*",function(req,res,next){
     //设置允许跨域的域名，*代表允许任意域名跨域
