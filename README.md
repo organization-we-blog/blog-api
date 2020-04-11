@@ -1,9 +1,12 @@
 # we-blog API
 
+## 注意
+请各位大佬阅读完此文件（很短）
+请使用dev分支进行开发
 
 
 ## 项目概况
-we-blog的api项目，只要为web页面数据和操作数据库
+we-blog的api项目，主要为web页面数据和操作数据库
 
 ## 技术栈
 `node`  `javascript`  `express`  `mongoDB`  `mongoose`
@@ -37,7 +40,7 @@ we-blog的api项目，只要为web页面数据和操作数据库
 
 ## 条件工具
 
-+ webStorm	IDE
++ webStorm	    IDE
 + vsCode         IDE
 + postman       接口测试
 
@@ -50,7 +53,10 @@ we-blog的api项目，只要为web页面数据和操作数据库
 - master // 主干
 - dev // 开发
 
+请使用dev分支进行开发，凡是直接提交到master的代码最终都将会被驳回
+我将会对dev与master的区别代码进行阅读，发现小bug我将修改，发现大bug请提交者修改（请各位大佬写注释，饶过小弟一命）
 
+我会将最新的master部署到服务器上
 
 
 
@@ -68,9 +74,6 @@ npm install
 
 ```shell
 npm run test
-
-#或者
-npm run ci
 ```
 
 
