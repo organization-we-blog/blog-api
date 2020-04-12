@@ -6,9 +6,9 @@ module.exports = function (req,res) {
         if(err){
             err_logs.addErrLog(req,"数据库","数据库读取错误",__filename);//添加错误日志
             res.statusCode = 500;//给500码
-            res.json({msg: "error",result: []})//响应
+            res.json({code:0, msg: "服务器繁忙",datas: []})//响应
         }else{
-            res.json({msg: "ok",result: docs})
+            res.json({code:1, msg: "获取成功",datas: docs})//响应
         }
     })
 };

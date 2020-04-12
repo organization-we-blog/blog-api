@@ -28,8 +28,14 @@ router.post("/article/getTagAndClassify",function (req, res) {//获取所有分�
     require("./getTagAndClassify.js")(req, res);
 });
 
-router.post("/article/getArticle",function (req, res) {//获取所有文章（规划中）
-    require("./getArticle.js")(req, res);
+router.post("/article/getAllArticle",function (req, res) {//获取所有文章（规划中）
+    require("./getAllArticle.js")(req, res);
 });
+
+router.post("/article/deleteArticleById",function (req, res) {//添加文章（规划中）
+    require("./deleteArticleById.js")(req, res);
+});
+
+
 
 module.exports = router;

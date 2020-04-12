@@ -11,7 +11,7 @@ router.post('/login', require('./login'))
 // 更新当前登录用户信息 (接口待完善)
 router.post('/updateUser', require('./updateUser'))
 
-// 获取用户列表
+// 获取用户列表 (接口待完善)
 router.get('/userList', require('./userList'))
 
 // 根据 id 查询用户
@@ -22,5 +22,8 @@ router.put('/users/:id', require('./updateUserById'))
 
 // 根据 id 删除用户 
 router.delete('/users/:id', require('./deleteUserById'))
+
+// 登录用户密码修改
+router.put('/password', require('./password'))
 
 module.exports = router;
