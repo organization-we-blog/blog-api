@@ -9,13 +9,13 @@ const err_log = new Schema({
     type: String,//访问类型
     time: String,//来访时间
     err_type:String,//错误类型
-    err_msg: String,//错误信息
+    err_msg: Object,//错误信息
     req_data: Object,//访问携带的数据
     err_file: String,//错误所在文件
     err_status: Number,//错误状态
 });
 
-function getClientIp(req) {
+function getClientIp(req) {//获取用户ip
     return req.headers['x-forwarded-for'] ||
         req.connection.remoteAddress ||
         req.socket.remoteAddress ||
