@@ -1,16 +1,16 @@
 const express = require("express");
 let multer  = require('multer');
-let upload = multer({ dest: '/uploads' })
+let upload = multer({ dest: 'public/uploads' })
 const router = express.Router();
-
-/*
-router.post('/article/fileSubmit', function (req, res) {//文章内容文件上传
-    require("./fileSubmit.js")(req, res);
-});
 
 // 图片文件上传
 router.post('/upload', upload.single('avatar'), function (req, res) {
     require("./upload.js")(req, res);
+});
+
+/*
+router.post('/article/fileSubmit', function (req, res) {//文章内容文件上传
+    require("./fileSubmit.js")(req, res);
 });
 
 router.post("/article/addClassify",function (req, res) {//添加文章分类
