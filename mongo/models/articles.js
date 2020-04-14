@@ -3,11 +3,12 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 
 const article = new Schema({
-    title: {//标题
+    title: {  //标题
         type: String
     },
     thumbnail: {//缩略图
         type: String,
+        default: null
     },
     synopsis: {//简介
         type: String
@@ -23,38 +24,37 @@ const article = new Schema({
         type: Date,
         default: Date.now
     },
-    classify_id: {//分类id（分类只能有一个）
+    content: { // 内容
+        type: String,
+        default: null
+    },
+    category: {//分类
         type: ObjectId,
         ref: "classifys"//与classifys表关联
-    }
-    tag_id: [//标签
+    },
+    tag: [ //标签
         {
             type: ObjectId,
             ref: "tags"//与tag表关联
         }
     ],
-    user_id:{//用户
+    author: {//用户
         type: ObjectId,
-        ref: "users"//与tag表关联
+        ref: "users"//与users表关联
     },
     show: {//是否公开（0：不公开，1：公开）
         type: Number,
         default: 1
     },
-    pv: {//浏览量
-        type: Number,
-        default: 0,
-        min: 0
-    },
-    good: {//点赞
-        type: Number,
-        default: 0,
-        min: 0
-    },
-    bad: {//踩
-        type: Number,
-        default: 0,
-        min: 0
+    meta: {
+        // 浏览量
+        pv: { type: Number, default: 0, min: 0 },
+        // 点赞
+        good: { type: Number, default: 0, min: 0 },
+        // 踩
+        bad: { type: Number, default: 0, min: 0 },
+        // 评论数量
+        comments: { type: Number, default: 0, min: 0 }
     }
 });
 
