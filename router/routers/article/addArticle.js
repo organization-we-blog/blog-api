@@ -35,3 +35,18 @@ module.exports = async function (req,res) {
         });
     }
 };
+
+// module.exports = async (req, res) => {
+//     const { userid } = req.cookies
+//     if (!userid) {
+//         return res.send({ code: 1, msg: '作者id不能为空' })
+//     }
+//     // 添加作者
+//     req.body.author = userid;
+//     // 创建
+//     const post = new articles(req.body);
+//     // 保存
+//     await post.save();
+//     // 响应
+//     res.send({ code: 0, msg: '添加文章成功', datas: post });
+// }

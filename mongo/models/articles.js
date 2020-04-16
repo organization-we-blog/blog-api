@@ -4,7 +4,10 @@ const ObjectId = Schema.Types.ObjectId;
 
 const article = new Schema({
     title: {  //标题
-        type: String
+        type: String,
+        minlength: 2,
+		maxlength: 100,
+		required: [true, '请输入文章标题']
     },
     thumbnail: {//缩略图
         type: String,
@@ -30,7 +33,8 @@ const article = new Schema({
     },
     category: {//分类
         type: ObjectId,
-        ref: "classifys"//与classifys表关联
+        ref: "classifys", //与classifys表关联
+        required: [true, '分类信息不存在']
     },
     tag: [ //标签
         {
@@ -40,7 +44,8 @@ const article = new Schema({
     ],
     author: {//用户
         type: ObjectId,
-        ref: "users"//与users表关联
+        ref: "users", //与users表关联
+        required: true
     },
     show: {//是否公开（0：不公开，1：公开）
         type: Number,

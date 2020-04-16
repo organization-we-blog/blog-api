@@ -31,12 +31,13 @@ app.use("*", function (req, res, next) {
 app.use('/public/', express.static('./public/'));
 app.use('/uploads/', express.static('./uploads/'));
 
-const { router, article, users, slide, setting } = require("./router");
+const { router, article, users, slide, setting,comment } = require("./router");
 app.use(router);//挂载路由
 app.use(article);
 app.use(users);
 app.use(slide)
 app.use(setting)
+app.use(comment)
 
 
 app.listen(3002, () => {
