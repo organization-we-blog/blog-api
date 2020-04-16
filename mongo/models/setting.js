@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 // 创建网站设置模型规则
-const SettingSchema = new mongoose.Schema({
+const SettingSchema = new Schema({
   logo: { type: String, default: null }, // 网站logo
   title: { type: String, minlength: 2, maxlength: 30 }, // 网站名称
   description: { type: String, minlength: 2, maxlength: 30 }, // 网站描述

@@ -8,7 +8,7 @@ const SlideSchema = new mongoose.Schema({
 })
 
 // 轮播图模型
-const SlideModel = mongoose.model('Setting', SlideSchema);
+const SlideModel = mongoose.model('Slide', SlideSchema);
 
 // 导出模型
 module.exports = SlideModel

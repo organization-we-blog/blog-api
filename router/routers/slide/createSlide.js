@@ -23,7 +23,6 @@ module.exports = async (req, res) => {
   res.set({
     'content-type': 'application/json; charset=utf-8'
   });
-  console.log(file);
   
   // 准备文件地址
   filePath = '/public/slides/' + file.originalname
