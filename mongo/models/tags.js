@@ -3,8 +3,12 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const tag = new Schema({
-    value: String,//标签名
-    sum: {type: Number, default: 0},//该标签下的文章数量
+    // 标签名称
+    title: { type: String, minlength: 2, maxlength: 40, required: true },
+    // 标签名
+    className: { type: String, default: null },
+    // 创建时间
+    createTime: {type: Date, default: Date.now}
 });
 let tags = mongoose.model('tags', tag);
 

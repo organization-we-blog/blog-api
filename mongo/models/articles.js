@@ -16,9 +16,6 @@ const article = new Schema({
     synopsis: {//简介
         type: String
     },
-    content_path: {//内容文件路径
-        type: String
-    },
     create_time: {//创建时间
         type: Date,
         default: Date.now
@@ -39,7 +36,7 @@ const article = new Schema({
     tag: [ //标签
         {
             type: ObjectId,
-            ref: "tags"//与tag表关联
+            ref: "tags"//与tags表关联
         }
     ],
     author: {//用户
@@ -63,7 +60,6 @@ const article = new Schema({
     }
 });
 
-let articles = mongoose.model('Article', article);
+let articles = mongoose.model('articles', article);
 
 module.exports = articles;
-

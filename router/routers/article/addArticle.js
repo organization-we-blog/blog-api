@@ -1,52 +1,65 @@
+/**
+ * @Description: 添加文章
+ * @author kimi233
+ * @Email 1571356682@qq.com
+ * @date 2020/4/20
+ * @requestData title:String
+ * @requestData thumbnail:String
+ * @requestData synopsis:String
+ * @requestData author:ObjectId
+ * @requestData content:String
+ * @requestData category:ObjectId
+ * @requestData tag:[ObjectId]
+ * @responseData code:Number
+ * @responseData msg:String
+ * @responseData datas:Array
+*/
 const articles = require("../../../mongo/models/articles");
-const tags = require("../../../mongo/models/tags");
-const classifys = require("../../../mongo/models/classifys");
 const err_logs = require("../../../mongo/models/err_logs");
-const moment = require('moment');//格式化时间的插件
 
-
-module.exports = async function (req,res) {
-    let {title, synopsis, filepath,classify,tag} = req.body;//接收请求数据
-    let time = moment().format("YYYY-MM-DD HH:mm:ss");//获取当前时间
-    if(!isNaN(title&&synopsis&&filepath&&classify&&tag || typeof tag !== "object")) {//验证请求数据是否齐全(全部为true结构为发false)
-        res.json({code:0, msg: "携带数据不符合要求，请求驳回", datas: []})
+module.exports = function (req,res) {
+    let {title, thumbnail, synopsis, author, content,category,tag} = req.body;//接收请求数据
+    if(!(title&&thumbnail&&synopsis&&author&&content&&category&&tag) || typeof tag !== "object") {//验证请求数据是否齐全(全部为true结构为发false)
+        if(!title){
+            res.json({code:0, msg: "文章标题不能为空", datas: []})
+        }else if(!thumbnail){
+            res.json({code:0, msg: "文章缩略图不能为空", datas: []})
+        }else if(!synopsis){
+            res.json({code:0, msg: "文章简介不能为空", datas: []})
+        }else if(!author){
+            res.json({code:0, msg: "文章作者不能为空", datas: []})
+        }else if(!content){
+            res.json({code:0, msg: "文章内容不能为空", datas: []})
+        }else if(!category){
+            res.json({code:0, msg: "文章分类不能为空", datas: []})
+        }else if(!tag){
+            res.json({code:0, msg: "文章标签不能为空", datas: []})
+        }else if(typeof tag !== "object"){
+            res.json({code:0, msg: "文章标签必须为数组", datas: []})
+        }else if(thumbnail.indexOf("/uploads/")!==0){//验证图片路径格式
+            res.json({code:0, msg: "图片路径格式不符(/uploads/xxx)", datas: []})
+        }else if(title.length<2||title.length>100){
+            res.json({code:0, msg: "文章标题长度必须在2-100之间", datas: []})
+        }
     }else {
+        let newArticle = new articles({
+            title,//标题
+            thumbnail,//缩略图
+            synopsis,//简介
+            content,//内容
+            author,//用户
+            category,//文章分类
+            tag,//文章标签
+        });
         //插入文章到数据库
-        await articles.create({title, synopsis, filepath, create_time:time, update_time:time, classify, tag, pv:0, good:0, bad:0},function (err,doc) {
+        newArticle.save(function (err,doc) {
             if(err){
-                err_logs.addErrLog(req,"数据库","存储错误",__filename);//存错误日志
+                err_logs.addErrLog(req,"数据库",err,__filename);//存错误日志
                 res.statusCode = 500;//给500
-                res.json({code:0,msg: "error",datas: []})//响应
+                res.json({code:0,msg: "添加失败",datas: []})//响应
             }else {
-                res.json({code:1, msg:"ok", datas: [doc]})//响应
-            }
-        });
-        //将对应文分类下的sum+1
-        await classifys.updateOne({_id:classify},{$inc:{sum:1}},function (err, doc) {
-            if(err){
-                err_logs.addErrLog(req,"数据库","修改错误",__filename);//存错误日志
-            }
-        });
-        //将对应文分类下的sum+1
-        await tags.updateMany({_id:{$in:tag}},{$inc:{sum:1}},function (err, doc) {
-            if(err){
-                err_logs.addErrLog(req,"数据库","修改错误",__filename);//存错误日志
+                res.json({code:1, msg:"添加成功", datas: [doc]})//响应
             }
         });
     }
 };
-
-// module.exports = async (req, res) => {
-//     const { userid } = req.cookies
-//     if (!userid) {
-//         return res.send({ code: 1, msg: '作者id不能为空' })
-//     }
-//     // 添加作者
-//     req.body.author = userid;
-//     // 创建
-//     const post = new articles(req.body);
-//     // 保存
-//     await post.save();
-//     // 响应
-//     res.send({ code: 0, msg: '添加文章成功', datas: post });
-// }

@@ -1,4 +1,4 @@
-const classifys = require("../../../mongo/models/classifys");
+const classifys = require("../../../mongo/models/category");
 const tags = require("../../../mongo/models/tags");
 const err_logs = require("../../../mongo/models/err_logs");
 

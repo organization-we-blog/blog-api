@@ -1,6 +1,6 @@
 const articles = require("../../../mongo/models/articles");
 const tags = require("../../../mongo/models/tags");
-const classifys = require("../../../mongo/models/classifys");
+const classifys = require("../../../mongo/models/category");
 const err_logs = require("../../../mongo/models/err_logs");
 
 module.exports = async function (req,res) {

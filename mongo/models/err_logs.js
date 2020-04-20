@@ -33,7 +33,7 @@ err_logs.addErrLog = function(req,err_type,err_msg,err_file){
     let time = moment().format("YYYY-MM-DD HH:mm:ss");
     //请求数据
     let req_data = req.body || req.query;
-    //错误状态
+    //错误状态（0：未修复，1：已修复）
     let err_status = 0;
 
 
@@ -51,10 +51,10 @@ err_logs.addErrLog = function(req,err_type,err_msg,err_file){
                 }else {
                     let datas = JSON.parse(data)||[];
                     let dataErr = {
-                        start_err: {ip,type,time,err_type,err_msg,req_data,err_file,err_status},
-                        bd_err: err
+                        start_err: {ip,type,time,err_type,err_msg,req_data,err_file,err_status},//原始错误信息
+                        bd_err: err//数据库错误信息
                     };
-                    datas.push(dataErr);
+                    datas.push(dataErr);//存入json文件
                     fs.writeFile('../../errorLog.json',JSON.stringify(datas),function (write_err) {
                         if(write_err){
                             console.log("出现连环错误，以下是该过程的错误信息 错误起源》数据库存储日志错误》文件存储日志错误");

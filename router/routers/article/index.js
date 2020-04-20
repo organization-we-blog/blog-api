@@ -12,15 +12,15 @@ router.post('/upload', upload.single('avatar'), function (req, res) {
 router.post("/article/addArticle",function (req, res) {//添加文章（规划中）
     require("./addArticle.js")(req, res);
 });
-
+router.post("/article/addArticlecates",function (req, res) {//添加文章分类
+    require("./addArticlecates.js")(req, res);
+});
 /*
 router.post('/article/fileSubmit', function (req, res) {//文章内容文件上传
     require("./fileSubmit.js")(req, res);
 });
 
-router.post("/article/addClassify",function (req, res) {//添加文章分类
-    require("./addClassify.js")(req, res);
-});
+
 
 router.post("/article/addTag",function (req, res) {//添加文章标签
     require("./addTag.js")(req, res);
@@ -39,9 +39,9 @@ router.post("/article/deleteArticleById",function (req, res) {//添加文章（�
     require("./deleteArticleById.js")(req, res);
 });
 */
-router.post("/article/*",function (req, res) {//添加文章（规划中）
+/*router.post("/article/!*",function (req, res) {//添加文章（规划中）
     res.json({msg:"维护"})
-});
+});*/
 
 
 module.exports = router;
