@@ -30,7 +30,7 @@ module.exports = async function(req,res){
              *   }
         * */
         if (err instanceof multer.MulterError || !req.file || req.file.size===0) {//上传时发生错误,或者文件为空,或者文件大小为0
-            err_logs.addErrLog(req,"文件上传","文件上传错误",__filename);//添加错误日志（记录下用户IP，疑似攻击行为）
+            err_logs.addErrLog(req,err,__filename);//添加错误日志（记录下用户IP，疑似攻击行为）
             res.json({code:0,msg: "数据不符合要求",  datas: []});
         } else{//未发生错误
             //multer会自动更改存储文件名称唯一

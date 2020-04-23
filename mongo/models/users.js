@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-//创建集合规则
+//创建用户集合规则
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, minlength: 2, maxlength: 20 },// 用户名
     password: { type: String, required: true }, // 密码

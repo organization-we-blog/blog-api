@@ -1,50 +1,67 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const ObjectId = Schema.Types.ObjectId;
 
 const article = new Schema({
-    title: {
+    title: {  //标题
         type: String,
-        default: "我没填标题"
+        minlength: 2,
+        maxlength: 50,
+        required: [true, '请输入文章标题']
     },
-    synopsis: {
+    thumbnail: {//缩略图
         type: String,
-        default: "我没填简介"
+        default: null
     },
-    filepath: {
+    synopsis: {//简介
         type: String,
-        default: "404"
+        minlength: 2,
+        maxlength: 200,
     },
-    create_time: {
+    create_time: {//创建时间
+        type: Date,
+        default: Date.now
+    },
+    update_time: {//修改时间
+        type: Date,
+        default: Date.now
+    },
+    content: { // 内容
         type: String,
-        default: "2020/0/0"
+        default: null
     },
-    update_time: {
-        type: String,
-        default: "2020/0/0"
+    category: {//分类
+        type: ObjectId,
+        ref: "classifys", //与classifys表关联
+        required: [true, '分类信息不存在']
     },
-    classify: String,
-    tag: {
-        type: Array,
-        default: []
+    tag: [ //标签
+        {
+            type: ObjectId,
+            ref: "tags"//与tags表关联
+        }
+    ],
+    author: {//用户
+        type: ObjectId,
+        ref: "users", //与users表关联
+        required: true
     },
-    pv: {
+    show: {//是否公开（0：不公开，1：公开）
         type: Number,
-        default: 0,
-        min: 0
+        default: 1
     },
-    good: {
-        type: Number,
-        default: 0,
-        min: 0
-    },
-    bad: {
-        type: Number,
-        default: 0,
-        min: 0
+    meta: {
+        // 浏览量
+        pv: { type: Number, default: 0, min: 0 },
+        // 点赞
+        good: { type: Number, default: 0, min: 0 },
+        // 踩
+        bad: { type: Number, default: 0, min: 0 },
+        // 评论数量
+        comments: { type: Number, default: 0, min: 0 }
     }
 });
 
 let articles = mongoose.model('articles', article);
 
-module.exports = articles
-
+module.exports = articles;
