@@ -6,15 +6,17 @@ const article = new Schema({
     title: {  //标题
         type: String,
         minlength: 2,
-		maxlength: 100,
-		required: [true, '请输入文章标题']
+        maxlength: 50,
+        required: [true, '请输入文章标题']
     },
     thumbnail: {//缩略图
         type: String,
         default: null
     },
     synopsis: {//简介
-        type: String
+        type: String,
+        minlength: 2,
+        maxlength: 200,
     },
     create_time: {//创建时间
         type: Date,
