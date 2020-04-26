@@ -3,7 +3,7 @@ mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 const {USER_NAME,PASSWORD,HOST,PORT,DATABASE} = require("./config/index.js").DATABASE.READ_WRITE_USER;
 
-const uri = `mongodb://${USER_NAME}:${PASSWORD}@${HOST}:${PORT}/${DATABASE}`;
+const uri = `mongodb://${USER_NAME}:${PASSWORD}@${HOST}:${PORT}/${DATABASE}`;//连接名
 mongoose.connect(uri, {//mongoDB连接不需要断开，全程保持连接状态即可，服务关闭时会自动断开
     useNewUrlParser: true,
     useUnifiedTopology: true

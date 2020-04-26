@@ -24,6 +24,10 @@ router.post("/article/deleteArticleById",function (req, res) {//删除文章
     require("./deleteArticleById.js")(req, res);
 });
 
+router.post("/article/getAllArticle",function (req, res) {//获取所有文章（规划中）
+    require("./getAllArticle.js")(req, res);
+});
+
 /*
 router.post('/article/fileSubmit', function (req, res) {//文章内容文件上传
     require("./fileSubmit.js")(req, res);
@@ -38,9 +42,7 @@ router.post("/article/getTagAndClassify",function (req, res) {//获取所有分�
     require("./getTagAndClassify.js")(req, res);
 });
 
-router.post("/article/getAllArticle",function (req, res) {//获取所有文章（规划中）
-    require("./getAllArticle.js")(req, res);
-});
+
 
 
 */
