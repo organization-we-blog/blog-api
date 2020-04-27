@@ -3,7 +3,7 @@ let fs = require("fs");
 // 图片文件上传
 module.exports = async function (req, res) {
     let file = req.file;
-    fileInfo = {}
+    fileInfo = {};
     if (!file) {
         return res.send({ code: 1, msg: '上传文件失败', datas: [] })
     }

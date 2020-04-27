@@ -1,11 +1,11 @@
 const err_logs = require("../../../mongo/models/err_logs");
+const fs = require('fs');
 let multer  = require('multer');
-let upload = multer({ dest: '/uploads/ArticleContents' }).single('file');//文件上传配置
+let upload = multer({ dest: 'uploads/ArticleContents/' });//文件上传配置
 //接收的参数名： file
 //dest：文件上传存储目录
-
 module.exports = function(req,res){
-        upload(req, res, function (err) {
+        upload.single('file')(req, res, function (err) {
             /*
             * 当没有上传文件时req.file为空
             * 当有文件上传时req.file为以下内容
@@ -32,13 +32,12 @@ module.exports = function(req,res){
             if(!req.file || req.file.size === 0){
                 res.json({code:0,msg: "图片不能为空",  datas: []});
             }else {
-                if (err instanceof multer.MulterError) {//上传发生未知错误
+                if (err) {//上传发生未知错误
                     err_logs.addErrLog(req,err,__filename);
                     res.statusCode = 500;
                     res.json({code:0,msg: "上传失败",  datas: []});
-                } else{//未发生错误
-                    //multer会自动更改存储文件名称唯一
-                    res.json({code:1,msg: "上传成功",  datas: [{filepath: "/uploads/ArticleContents" + req.file.filename}]})//返回文件路径
+                } else{
+                    res.json({code:1,msg: "上传成功",  datas: [{filepath: "/uploads/ArticleContents/" + req.file.filename}]})//返回文件路径
                 }
             }
         });
