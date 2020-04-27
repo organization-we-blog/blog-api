@@ -22,7 +22,7 @@ function getClientIp(req) {//获取用户ip
 }
 
 err_logs.addErrLog = function(req,err_obj,err_file){
-    if(err_obj instanceof Error){//检测err_obj是否是一个错误对象
+    if(err_obj instanceof Error || (err_obj.name && err_obj.stack && err_obj.message)){//检测err_obj是否是一个错误对象
         //获取ip
         let ip = getClientIp(req);
         //访问类型

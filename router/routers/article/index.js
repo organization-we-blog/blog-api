@@ -28,10 +28,12 @@ router.post("/article/getAllArticle",function (req, res) {//获取所有文章�
     require("./getAllArticle.js")(req, res);
 });
 
-/*
-router.post('/article/fileSubmit', function (req, res) {//文章内容文件上传
-    require("./fileSubmit.js")(req, res);
+router.post('/article/uploadImg', function (req, res) {//文章内容文件上传
+    require("./uploadImg.js")(req, res);
 });
+
+/*
+
 
 
 
