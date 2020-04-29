@@ -21,7 +21,7 @@ module.exports = function(req,res){//文件上传配置
                     res.statusCode = 500;
                     res.json({code:0,msg: "上传失败",  datas: []});
                 } else{
-                    res.json({code:1,msg: "上传成功",  datas: [{filepath: req.userUploadDir + req.file.filename}]})//返回文件路径
+                    res.json({code:1,msg: "上传成功",  datas: [{filepath: req.userUploadDir.slice(1) + req.file.filename}]})//返回文件路径
                 }
             }
         });
