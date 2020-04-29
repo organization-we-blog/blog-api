@@ -7,6 +7,8 @@ const tag = new Schema({
     //title: { type: String, minlength: 2, maxlength: 40, required: true },
     // 标签名
     tagName: { type: String, minlength: 2, maxlength: 20, required: true},
+    // 标签专属颜色
+    tagColor: { type: String, minlength: 4, maxlength: 7, default: "#44afff"},
     // 创建时间
     createTime: {type: Date, default: Date.now}
 });
