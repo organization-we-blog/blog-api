@@ -1,8 +1,10 @@
+console.log(new Date());
 const err_logs = require("../../../mongo/models/err_logs");
 const fs = require('fs');
 let multer  = require('multer');
 
 module.exports = function(req,res){//文件上传配置
+    console.log(new Date());
     let upload = multer({
         dest: req.userUploadDir,
     });
@@ -22,6 +24,7 @@ module.exports = function(req,res){//文件上传配置
                     res.json({code:0,msg: "上传失败",  datas: []});
                 } else{
                     res.json({code:1,msg: "上传成功",  datas: [{filepath: req.userUploadDir.slice(1) + req.file.filename}]})//返回文件路径
+                    console.log(new Date());
                 }
             }
         });
