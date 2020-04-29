@@ -38,6 +38,10 @@ router.post('/article/uploadArticleThumbnailImg', function (req, res) {//文章�
     require("./uploadImg.js")(req, res);
 });
 
+router.post('/article/getAllTagAndCategory', function (req, res) {//获取所有标签和分类信息
+    require("./getAllTagAndCategory.js")(req, res);
+});
+
 /*router.post("/article/!*",function (req, res) {//添加文章（规划中）
     res.json({msg:"维护"})
 });*/
