@@ -29,12 +29,12 @@ router.post("/article/getAllArticle",function (req, res) {//获取所有文章�
 });
 
 router.post('/article/uploadArticleContentImg', function (req, res) {//文章内容中的图片上传
-    req.userUploadDir = "uploads/ArticleContents/";
+    req.userUploadDir = "/uploads/ArticleContents/";
     require("./uploadImg.js")(req, res);
 });
 
 router.post('/article/uploadArticleThumbnailImg', function (req, res) {//文章缩略图的图片上传
-    req.userUploadDir = "uploads/ArticleThumbnails/";
+    req.userUploadDir = "/uploads/ArticleThumbnails/";
     require("./uploadImg.js")(req, res);
 });
 
