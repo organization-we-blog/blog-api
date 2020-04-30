@@ -19,7 +19,6 @@ module.exports = async function (req,res) {
         let {id} = req.body;
         if(isObjectId(id)){//id合法
             let DelArtDoc = await articles.findByIdAndRemove(id);
-            console.log(DelArtDoc);
             if(DelArtDoc){//结果判空
                 await res.json({code:1, msg:"删除成功", datas:[DelArtDoc]});
             }else{
@@ -35,7 +34,6 @@ module.exports = async function (req,res) {
     }catch (e) {
         console.log(e);
         err_logs.addErrLog(req,e,__filename);
-        res.statusCode = 500;
         await res.json({code:0, msg: "删除失败", datas: []})
     }
 };

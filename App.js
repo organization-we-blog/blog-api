@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 require('./mongoConn.js');//连接数据库
 
 const app = express();
+require("./global");//加载全局数据
 
 
 // 配置 body-parser
