@@ -22,8 +22,14 @@ module.exports = async function (req,res) {
             {$lookup:{from: "tags",localField: "tag",foreignField: "_id",as: "tag"}},
             {$project:{content:0,"author.password":0}},//不查询文章内容,以及作者密码
         ]);
+        //docs.category = docs.category[0];
+        for(let i=0; i<docs.length; i++){
+            docs[i].category = docs[i].category[0];
+            docs[i].author = docs[i].author[0];
+        }
         await res.json({code:1,msg: "文章获取成功",datas: docs});
     }catch (e) {
+        console.log(e);
         err_logs.addErrLog(req,e,__filename);//存错误日志
         await res.json({code:500,msg: "文章获取失败",datas: []});
     }
