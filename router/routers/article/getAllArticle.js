@@ -1,3 +1,14 @@
+/**
+ * @Description: 获取文章列表页所需信息
+ * @author kimi233
+ * @Email 1571356682@qq.com
+ * @date 2020/4/30
+ * @param req   请求对象
+ * @param res   响应对象
+ * @responseData code:Number    结果状态码
+ * @responseData msg:String     结果说明
+ * @responseData datas:Array    数据体
+*/
 const articles = require("../../../mongo/models/articles");
 const err_logs = require("../../../mongo/models/err_logs");
 
@@ -14,7 +25,6 @@ module.exports = async function (req,res) {
         await res.json({code:1,msg: "文章获取成功",datas: docs});
     }catch (e) {
         err_logs.addErrLog(req,e,__filename);//存错误日志
-        res.statusCode = 500;//给500
-        await res.json({code:0,msg: "文章获取失败",datas: []});
+        await res.json({code:500,msg: "文章获取失败",datas: []});
     }
 };

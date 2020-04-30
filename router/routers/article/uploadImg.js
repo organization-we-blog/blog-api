@@ -1,3 +1,15 @@
+/**
+ * @Description: 图片上传
+ * @author kimi233
+ * @Email 1571356682@qq.com
+ * @date 2020/4/30
+ * @param req   请求对象
+ * @param res   响应对象
+ * @requestData file:image/jpg ||  image/png      图片
+ * @responseData code:Number    结果状态码
+ * @responseData msg:String     结果说明
+ * @responseData datas:Array    数据体
+*/
 const err_logs = require("../../../mongo/models/err_logs");
 const fs = require('fs');
 let multer  = require('multer');
@@ -18,8 +30,7 @@ module.exports = function(req,res){//文件上传配置
             } else {
                 if (err) {//上传发生未知错误
                     err_logs.addErrLog(req,err,__filename);
-                    res.statusCode = 500;
-                    res.json({code:0,msg: "上传失败",  datas: []});
+                    res.json({code:500,msg: "上传失败",  datas: []});
                 } else{
                     res.json({code:1,msg: "上传成功",  datas: [{filepath: req.userUploadDir.slice(1) + req.file.filename}]})//返回文件路径
                 }

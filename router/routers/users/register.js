@@ -42,6 +42,6 @@ module.exports = async (req, res) => {
     res.send({ code: 1, msg: '用户注册成功', datas, token })
   } catch(e){
     err_logs.addErrLog(req,e,__filename);
-    return res.send({ code: 0, msg: '服务器繁忙', datas: [] })
+    return res.send({ code: 500, msg: '服务器繁忙', datas: [] })
   }
 };

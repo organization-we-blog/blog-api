@@ -82,8 +82,7 @@ module.exports = async function (req,res) {
             }
         }catch (e) {
             err_logs.addErrLog(req,e,__filename);//存错误日志
-            res.statusCode = 500;//给500
-            await res.json({code:0,msg: "添加失败",datas: []});
+            await res.json({code:500,msg: "添加失败",datas: []});
         }
     }
 };

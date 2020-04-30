@@ -34,6 +34,6 @@ module.exports = async function (req,res) {
         }
     }catch (e) {
         err_logs.addErrLog(req,e,__filename);
-        await res.json({code:0, msg: "删除失败", datas: []})
+        await res.json({code:500, msg: "删除失败", datas: []})
     }
 };

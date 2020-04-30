@@ -24,36 +24,10 @@ module.exports = function(req,res){
         categoryDoc.save(function (err,doc) {
             if(err){
                 err_logs.addErrLog(req,err,__filename);
-                res.statusCode = 500;
-                res.json({code:0, msg: "添加失败", datas: []})
+                res.json({code:500, msg: "添加失败", datas: []})
             }else {
                 res.json({code:1, msg: "添加成功", datas: [doc]})
             }
         })
     }
-    /*categorys.find({},function (err,docs) {//测试查询功能（多级）
-        if(err){
-            res.json(err)
-        }else {
-            //尽量不用聚合管道，会增加数据库压力，谢谢
-            //将doc数据转化为js数据
-            docs = docs.map(value=>value.toObject());
-            let f = docs.filter(value=>value.parent === null);//所有顶级分类
-            f = JSON.parse(JSON.stringify(f));
-            f = f.map(value=>{//添加所有2级分类
-                value.child = docs.filter(_ => {
-                    return String(value._id) == String(_.parent);
-                });
-                value.child.map(value=>{//添加所有3级分类
-                    value.child = docs.filter(_ => {
-                        return String(value._id) == String(_.parent)
-                    });
-                    return value;
-                });
-                return value;
-            });
-            res.json(f);
-        }
-    })*/
-
 };

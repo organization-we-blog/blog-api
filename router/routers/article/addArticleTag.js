@@ -30,8 +30,7 @@ module.exports = function(req,res){
         tagDoc.save(function (err,doc) {
             if(err){
                 err_logs.addErrLog(req,err,__filename);
-                res.statusCode = 500;
-                res.json({code:0, msg: "添加失败", datas: []})
+                res.json({code:500, msg: "添加失败", datas: []})
             }else {
                 res.json({code:1, msg: "添加成功", datas: [doc]})
             }
