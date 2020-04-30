@@ -46,7 +46,7 @@ const article = new Schema({
         ref: "User", //与users表关联
         required: true
     },
-    show: {//是否公开（0：不公开，1：公开）
+    state: {//状态（0：不公开，1：公开，2: 已删除）
         type: Number,
         default: 1
     },

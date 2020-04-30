@@ -18,7 +18,8 @@ module.exports = async function (req,res) {
     try {
         let {id} = req.body;
         if(isObjectId(id)){//id合法
-            let DelArtDoc = await articles.findByIdAndRemove(id);
+            //数据是宝贵的，暂时别删除。把文章状态修改为2
+            let DelArtDoc = await articles.findByIdAndUpdate(id,{$set:{state:2}});
             if(DelArtDoc){//结果判空
                 await res.json({code:1, msg:"删除成功", datas:[DelArtDoc]});
             }else{
@@ -32,9 +33,7 @@ module.exports = async function (req,res) {
             }
         }
     }catch (e) {
-        console.log(e);
         err_logs.addErrLog(req,e,__filename);
         await res.json({code:0, msg: "删除失败", datas: []})
     }
 };
-new Error()
