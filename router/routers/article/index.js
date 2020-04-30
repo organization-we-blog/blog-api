@@ -4,9 +4,9 @@ let upload = multer({ dest: 'public/uploads' });
 const router = express.Router();
 const {isAdmin} = require("../../token");
 
-// 图片文件上传（admin）
+// 图片文件上传（all）
 router.post('/upload', upload.single('avatar'), function (req, res) {
-    isAdmin(req, res, require("./upload.js"));
+    require("./upload.js")(req, res);
 });
 
 // 添加文章（admin）

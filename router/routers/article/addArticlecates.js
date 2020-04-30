@@ -13,21 +13,26 @@
 const categorys = require("../../../mongo/models/categorys");
 const err_logs = require("../../../mongo/models/err_logs");
 
-module.exports = function(req,res){
-    let {className} = req.body;
-    if(!className){
-        res.json({code:0, msg: "分类名字不能为空", datas: []});
-    }else if(className.length<2 || className.length>20){
-        res.json({code:0, msg: "分类名字长度只能在2-20之间", datas: []});
-    }else{
-        let categoryDoc = new categorys({className});
-        categoryDoc.save(function (err,doc) {
-            if(err){
-                err_logs.addErrLog(req,err,__filename);
-                res.json({code:500, msg: "添加失败", datas: []})
-            }else {
-                res.json({code:1, msg: "添加成功", datas: [doc]})
+module.exports = async function(req,res){
+    try {
+        let {className} = req.body;
+        className = className.trim();
+        if(!className){
+            return res.json({code:0, msg: "分类名字不能为空", datas: []});
+        }else if(className.length<2 || className.length>20){
+            return res.json({code:0, msg: "分类名字长度只能在2-20之间", datas: []});
+        }else{
+            if(await categorys.findOne({className})){
+                return res.json({code:0, msg: "分类名已经存在", datas: [],token:req.tokenObj.token})
+            } else {
+                let categoryDoc = new categorys({className});
+                let doc = await categoryDoc.save();
+                await res.json({code:1, msg: "添加成功", datas: [doc],token:req.tokenObj.token})
             }
-        })
+        }
+    }catch (e) {
+        err_logs.addErrLog(req,e,__filename);
+        return res.json({code:500, msg: "添加失败", datas: []})
     }
+
 };

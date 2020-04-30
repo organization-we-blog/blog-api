@@ -21,7 +21,7 @@ module.exports = async function (req,res) {
             //数据是宝贵的，暂时别删除。把文章状态修改为2
             let DelArtDoc = await articles.findByIdAndUpdate(id,{$set:{state:2}});
             if(DelArtDoc){//结果判空
-                await res.json({code:1, msg:"删除成功", datas:[DelArtDoc]});
+                await res.json({code:1, msg:"删除成功", datas:[DelArtDoc],token:req.tokenObj.token});
             }else{
                 await res.json({code:0, msg:"该文章不存在", datas:[]});
             }

@@ -15,26 +15,34 @@
 const tags = require("../../../mongo/models/tags");
 const err_logs = require("../../../mongo/models/err_logs");
 
-module.exports = function(req,res){
-    let {tagName,tagColor} = req.body;
-    if(!tagName){
-        res.json({code:0, msg: "标签名字不能为空", datas: []});
-    }else if(tagName.length<2 || tagName.length>20){
-        res.json({code:0, msg: "标签名字长度只能在2-20之间", datas: []});
-    }else if(!tagColor){
-        res.json({code:0, msg: "标签颜色不能为空", datas: []});
-    }else if(!/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(tagColor)){
-        res.json({code:0, msg: "标签颜色要求使用16进制格式", datas: []});
-    } else{
-        let tagDoc = new tags({tagName,tagColor});
-        tagDoc.save(function (err,doc) {
-            if(err){
-                err_logs.addErrLog(req,err,__filename);
-                res.json({code:500, msg: "添加失败", datas: []})
+module.exports = async function(req,res){
+    try {
+        let {tagName,tagColor} = req.body;
+        tagName = tagName.trim();
+        tagColor = tagColor.trim();
+        if(!tagName){
+            return res.json({code:0, msg: "标签名字不能为空", datas: []});
+        }else if(tagName.length<2 || tagName.length>20){
+            return res.json({code:0, msg: "标签名字长度只能在2-20之间", datas: []});
+        }else if(!tagColor){
+            return res.json({code:0, msg: "标签颜色不能为空", datas: []});
+        }else if(!/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(tagColor)){
+            return res.json({code:0, msg: "标签颜色要求使用16进制格式", datas: []});
+        } else{
+            //验证标签名是否已经存在
+            if(await tags.findOne({tagName})){
+                return res.json({code:0, msg: "标签名已经存在", datas: [],token:req.tokenObj.token})
             }else {
-                res.json({code:1, msg: "添加成功", datas: [doc]})
+                //保存标签
+                let tagDoc = new tags({tagName,tagColor});
+                let doc = await tagDoc.save();
+                await res.json({code:1, msg: "添加成功", datas: [doc],token:req.tokenObj.token})
             }
-        })
+        }
+    }catch (e) {
+        err_logs.addErrLog(req,e,__filename);
+        return res.json({code:500, msg: "添加失败", datas: []})
     }
+
 };
 

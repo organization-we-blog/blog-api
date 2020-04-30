@@ -19,7 +19,7 @@ token.verify = async function (tokenStr) {
             if(!username ||  !password){
                 throw new Error("用户名或密码无效")
             }
-            let user = await users.find({username,password});
+            let user = await users.findOne({username,password});
             if(user){//密码用户正确
                 //4.更新token并返回
                 data.exp = current + 60*60*3;//过期时间3小时
@@ -65,6 +65,7 @@ token.isAdmin = async function(req, res,callback){
         let tokenIsOk = await token.verify(req.headers.token);//验证token
         if(tokenIsOk){//token有效
             if(tokenIsOk.userInfo.role === "admin"){//用户是admin角色
+                req.tokenObj = tokenIsOk;//将token解析结果挂着到req上
                 await callback(req, res);
             }else {
                 return res.json({code:4,msg:"该接口需要提供admin权限，您没有权限访问该接口",datas:[]})
