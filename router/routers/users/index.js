@@ -15,13 +15,13 @@ router.post('/test', async function (req,res) {
     }
 });
 
-// 注册
+// 注册(all)
 router.post('/register', require('./register'));
 
-// 登录
+// 登录(all)
 router.post('/login', require('./login'));
 
-// 更新当前登录用户信息 (接口待完善)
+// 修改当前登录用户信息 (this)
 router.post('/updateUser', require('./updateUser'));
 
 // 获取用户列表 (接口待完善)
