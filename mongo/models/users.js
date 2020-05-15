@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 //创建用户集合规则
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, minlength: 2, maxlength: 20 },// 用户名
-    password: { type: String, required: true, minlength: 6, maxlength: 18  }, // 密码
+    password: { type: String, required: true}, // 密码
     email: { type: String },// 邮箱
     gender: { type: String, default: '男', enum: ['男', '女', '保密'] }, // 性别
     avatar: { type: String, default: null }, // 头像

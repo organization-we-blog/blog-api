@@ -1,25 +1,46 @@
 const UserModel = require("../../../mongo/models/users");
 const md5 = require('blueimp-md5')
-const filter = { password: 0, __v: 0 } // 查询时过滤出指定的属性
 
 module.exports = async (req, res) => {
-  const { old_password, new_password } = req.body
-  // 判断当前用户是否处于登录状态
-  const { userid } = req.cookies
-  if (!userid) {
-    return res.send({ code: 1, msg: '用户未登录', datas: [] })
-  }
-  // 用户已登陆, 查询用户原密码, 比对旧密码
-  let { password: originpassword } = await UserModel.findById({ _id: userid })
-  // 由于md5加密相同的字符的结果都是相同的码，会出现撞库的风险(暂时使用这样的加密算法)
-  if (md5(old_password) !== originpassword) {
-    return res.send({ code: 3, msg: '原密码不一致', datas: [] })
-  }
-  // 原密码比对成功, 执行更改密码的操作
   try {
-    await UserModel.findByIdAndUpdate({ _id: userid }, { password: md5(new_password) }, filter)
-    res.send({ code: 0, msg: '密码更新成功' })
-  } catch {
-    res.send({ code: 4, msg: '密码更新失败' })
+    const {old_password, new_password} = req.body;
+    if (!old_password || !new_password) {
+      return res.send({code: 901, msg: '新密码或者旧密码为空', datas: []});
+    }
+    if (old_password === new_password) {
+      return res.send({code: 901, msg: '新密码与旧密码一样', datas: []});
+    }
+    if (new_password.length < 6 || new_password.length > 20 || !(/^[0-9a-zA-Z]{6,20}$/.test(new_password))) {
+      return res.send({code: 902, msg: '新密码只能由6-20位数字或字母组合而成', datas: []});
+    }
+    //验证行密码规则
+    if (!req.headers.token) {
+      return res.send({code: 403, msg: '您还未登陆', datas: []});
+    }
+    //解析token
+    let tokenObj = await require("../../token").verify(req.headers.token);
+    if (tokenObj) {
+      //获取token解析结果中当前用户id并修改密码
+      const userId = await tokenObj.userInfo._id;
+      //验证并修改
+      let result = await UserModel.findOneAndUpdate(
+          {_id: userId, password: md5(old_password)},
+          {$set: {password: md5(new_password)}})
+      if (result) {
+        //初始化一个token
+        let token = require("../../token").init({username:result.username, password: result.password})
+        result = result.toObject()
+        delete result.password;
+        return res.send({code: 200, msg: '修改成功', datas: [result], token});
+      } else {
+        return res.send({code: 801, msg: '旧密码错误', datas: []});
+      }
+    } else {
+      return res.send({code: 403, msg: '登录信息无效', datas: []});
+    }
+
+  } catch (e) {
+    require("../../../mongo/models/err_logs").addErrLog(req, e, __filename);
+    return res.send({code: 500, msg: '服务器繁忙', datas: []})
   }
 }

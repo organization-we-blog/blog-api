@@ -66,15 +66,15 @@ token.isAdmin = async function(req, res,callback){
         if(tokenIsOk){//token有效
             if(tokenIsOk.userInfo.role === "admin"){//用户是admin角色
                 req.tokenObj = tokenIsOk;//将token解析结果挂着到req上
-                await callback(req, res);
+                return callback(req, res);
             }else {
-                return res.json({code:4,msg:"该接口需要提供admin权限，您没有权限访问该接口",datas:[]})
+                return res.json({code:403,msg:"该接口需要提供admin权限，您没有权限访问该接口",datas:[]})
             }
         }else {
-            return res.json({code:3,msg:"该接口需要提供admin权限，您的令牌已经失效",datas:[]})
+            return res.json({code:403,msg:"该接口需要提供admin权限，您的令牌已经失效",datas:[]})
         }
     }else {
-        return res.json({code:2,msg:"该接口需要提供admin权限，您还未登陆",datas:[]})
+        return res.json({code:403,msg:"该接口需要提供admin权限，您还未登陆",datas:[]})
     }
 };
 

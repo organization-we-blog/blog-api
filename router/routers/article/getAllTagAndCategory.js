@@ -17,11 +17,7 @@ module.exports = async function (req,res) {
     try {
         let tagDocs = await tags.find({});
         let categoryDocs = await categorys.find({});
-        if(tagDocs && categoryDocs){
-            await res.json({code: 1, msg: "获取数据成功", datas: [{tags: tagDocs, categorys:categoryDocs}]})
-        }else {
-            await res.json({code: 1, msg: "获取数据失败", datas: []})
-        }
+        await res.json({code: 200, msg: "获取数据成功", datas: [{tags: tagDocs, categorys:categoryDocs}]})
     }catch (e) {
         err_logs.addErrLog(req,e,__filename);//存错误日志
         await res.json({code:500,msg: "获取数据失败",datas: []});

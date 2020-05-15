@@ -6,9 +6,9 @@ module.exports = async (req, res) => {
   try {
     const { username, password } = req.body;
     if(!username){
-      return res.json({code: 2,msg: "用户名不能为空", datas:[]})
+      return res.json({code: 901,msg: "用户名不能为空", datas:[]})
     }else if(!password){
-      return res.json({code: 3,msg: "密码不能为空", datas:[]})
+      return res.json({code: 902,msg: "密码不能为空", datas:[]})
     }
 
     // 根据username和password查询数据库users集合, 如果没有, 返回提示错误的信息, 如果有, 返回登录成功的信息(user)
@@ -18,10 +18,10 @@ module.exports = async (req, res) => {
       // 生成一个token并一起返回
       let token = require("../../token").init({username,password:md5(password)});
       // 返回成功的信息
-      res.send({ code: 0,msg:'登录成功', datas: [user], token })
+      res.send({ code: 200,msg:'登录成功', datas: [user], token })
     } else {
       // 登录失败
-      res.send({ code: 1, msg: '用户名或密码错误',datas:[] })
+      res.send({ code: 801, msg: '用户名或密码错误',datas:[] })
     }
   }catch (e) {
     require("../../../mongo/models/err_logs")

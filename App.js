@@ -45,8 +45,6 @@ app.use("*", function (req, res) {//404
     res.json({code: 0, msg: "哎啊！找不到对应的接口呢，请检查你的URL是否正确，或者与开发者确定该接口是否已经上线", datas: []})
 });
 
-
-
 app.listen(3002, () => {
     console.log("服务器启动成功,127.0.0.1:3002");
 });

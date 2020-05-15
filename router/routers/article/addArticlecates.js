@@ -18,16 +18,16 @@ module.exports = async function(req,res){
         let {className} = req.body;
         className = className.trim();
         if(!className){
-            return res.json({code:0, msg: "分类名字不能为空", datas: []});
+            return res.json({code:910, msg: "分类名字不能为空", datas: []});
         }else if(className.length<2 || className.length>20){
-            return res.json({code:0, msg: "分类名字长度只能在2-20之间", datas: []});
+            return res.json({code:902, msg: "分类名字长度只能在2-20之间", datas: []});
         }else{
             if(await categorys.findOne({className})){
-                return res.json({code:0, msg: "分类名已经存在", datas: [],token:req.tokenObj.token})
+                return res.json({code:801, msg: "分类名已经存在", datas: [],token:req.tokenObj.token})
             } else {
                 let categoryDoc = new categorys({className});
                 let doc = await categoryDoc.save();
-                await res.json({code:1, msg: "添加成功", datas: [doc],token:req.tokenObj.token})
+                await res.json({code:200, msg: "添加成功", datas: [doc],token:req.tokenObj.token})
             }
         }
     }catch (e) {

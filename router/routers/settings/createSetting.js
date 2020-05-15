@@ -29,12 +29,10 @@ module.exports = async (req, res) => {
   fileInfo.title = title
   fileInfo.description = description
   fileInfo.keywords = keywords
-
   // 清除现有设置
   await SettingModel.deleteMany({});
   // 创建网站设置
   let setting = new SettingModel(fileInfo);
   await setting.save();
-
   res.send({ code: 0, msg: '网站设置成功', datas: setting })
 }

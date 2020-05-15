@@ -7,24 +7,24 @@ module.exports = async (req, res) => {
   let { username, password, password2 } = req.body;
   username = username.trim();
   if (!username || !password) {
-    return res.send({ code: 2, msg: '用户名或密码不能为空', datas: [] })
+    return res.send({ code: 901, msg: '用户名或密码不能为空', datas: [] })
   }
   if(username.length<2 || username.length>20){
-    return res.send({ code: 3, msg: '用户名长度只能再2-20之间', datas: [] })
+    return res.send({ code: 902, msg: '用户名长度只能再2-20之间', datas: [] })
   }
-  if(password.length<6 || password.length>18){
-    return res.send({ code: 4, msg: '密码长度只能再6-18之间', datas: [] })
+  if(password.length<6 || password.length>18 || !(/^[0-9a-zA-Z]{6,20}$/.test(password))){
+    return res.send({ code: 903, msg: '密码由6-18数字或字母组合', datas: [] })
   }
   // 2.判断两次密码是否相同
   if (password !== password2) {
-    return res.send({ code: 5, msg: '密码不一致', datas: [] })
+    return res.send({ code: 904, msg: '密码不一致', datas: [] })
   }
   // 3.处理: 判断用户是否已经存在, 如果存在, 返回提示错误的信息, 如果不存在, 保存
   // 查询(根据username)
   let oldUserInfo = await UserModel.findOne({ username });
   // 如果user存在, 返回错误的信息
   if (oldUserInfo) {
-    return res.send({ code: 6, msg: '用户名已存在', datas: [] })
+    return res.send({ code: 801, msg: '用户名已存在', datas: [] })
   }
   // 4.如果不存在, 初始化用户模型(保存)  密码进行加密处理
   try {
@@ -46,7 +46,7 @@ module.exports = async (req, res) => {
           _id: user._id,
           createTime: user.createTime,
         }];
-    res.send({ code: 1, msg: '用户注册成功', datas, token })
+    res.send({ code: 200, msg: '用户注册成功', datas, token })
   } catch(e){
     err_logs.addErrLog(req,e,__filename);
     return res.send({ code: 500, msg: '服务器繁忙', datas: [] })

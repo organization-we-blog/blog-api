@@ -21,22 +21,22 @@ module.exports = async function(req,res){
         tagName = tagName.trim();
         tagColor = tagColor.trim();
         if(!tagName){
-            return res.json({code:0, msg: "标签名字不能为空", datas: []});
+            return res.json({code:901, msg: "标签名字不能为空", datas: []});
         }else if(tagName.length<2 || tagName.length>20){
-            return res.json({code:0, msg: "标签名字长度只能在2-20之间", datas: []});
+            return res.json({code:902, msg: "标签名字长度只能在2-20之间", datas: []});
         }else if(!tagColor){
-            return res.json({code:0, msg: "标签颜色不能为空", datas: []});
+            return res.json({code:903, msg: "标签颜色不能为空", datas: []});
         }else if(!/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(tagColor)){
-            return res.json({code:0, msg: "标签颜色要求使用16进制格式", datas: []});
+            return res.json({code:904, msg: "标签颜色要求使用16进制格式", datas: []});
         } else{
             //验证标签名是否已经存在
             if(await tags.findOne({tagName})){
-                return res.json({code:0, msg: "标签名已经存在", datas: [],token:req.tokenObj.token})
+                return res.json({code:801, msg: "标签名已经存在", datas: [],token:req.tokenObj.token})
             }else {
                 //保存标签
                 let tagDoc = new tags({tagName,tagColor});
                 let doc = await tagDoc.save();
-                await res.json({code:1, msg: "添加成功", datas: [doc],token:req.tokenObj.token})
+                await res.json({code:200, msg: "添加成功", datas: [doc],token:req.tokenObj.token})
             }
         }
     }catch (e) {
