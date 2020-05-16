@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
     if (user) {
       // 登录成功
       // 生成一个token并一起返回
-      let token = require("../../token").init({username,password:md5(password)});
+      let token = require("../../../util/token").init(username,md5(password));
       // 返回成功的信息
       res.send({ code: 200,msg:'登录成功', datas: [user], token })
     } else {

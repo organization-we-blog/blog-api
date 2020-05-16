@@ -14,7 +14,7 @@ we-blog的api项目，主要为web页面数据和操作数据库
 ## 项目结构
 
 > config    //配置文件目录
-> > index.js 	//配置文件，包含数据库信息
+> > TypeVerift.js 	//配置文件，包含数据库信息
 >
 > mongo
 > > models      //数据库的所有models（表结构）
@@ -24,7 +24,7 @@ we-blog的api项目，主要为web页面数据和操作数据库
 > router
 > > routers     //路由执行的代码
 > >
-> > index.js    //路由规则
+> > TypeVerift.js    //路由规则
 >
 > uploads   //上传文件的存放目录
 >

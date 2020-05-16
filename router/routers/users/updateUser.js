@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
     if(req.headers.token){
       //包含token（含有登陆信息）
       //2、验证token是否有效
-      let tokenObj = await require("../../token").verify(req.headers.token);
+      let tokenObj = await require("../../../util/token").verify(req.headers.token);
       let setObj = {};//要修改的字段和值
       if(tokenObj){//token有效
         let {username,email,gender,avatar,info} = req.body;
@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
         }
         if(avatar){
           setObj.avatar = avatar;
-          if(avatar !== ""){
+          if(!avatar.startsWith("/")){
             return res.send({ code: 903, msg: '头像地址不能为空', datas: [] });
           }
         }
@@ -51,7 +51,7 @@ module.exports = async (req, res) => {
         //4、修改用户信息
         let user = await UserModel.findByIdAndUpdate(tokenObj.userInfo._id,{$set:setObj},{ new: true, fields: '-password' });
         //生成一个新的token
-        let token = require("../../token").init({username:user.username,password:tokenObj.userInfo.password});
+        let token = require("../../../util/token").init(user.username,tokenObj.userInfo.password);
         return res.send({ code: 200, msg: '修改成功', datas: [user],token });
       }else {//token无效
         return res.send({ code: 403, msg: '登录信息无效', datas: [] });

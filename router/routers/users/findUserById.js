@@ -1,5 +1,5 @@
 const UserModel = require("../../../mongo/models/users");
-const {isObjectId} = require("../../../public/type_verify")
+const {isObjectId} = require("../../../util/TypeVerift")
 const ErrLogModel = require("../../../mongo/models/err_logs")
 
 module.exports = async (req, res) => {

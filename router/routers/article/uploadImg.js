@@ -13,8 +13,8 @@
 const err_logs = require("../../../mongo/models/err_logs");
 let multer  = require('multer');
 
-module.exports = function(req,res){//文件上传配置
-    let {token} = req.tokenObj;
+module.exports = function(req,res,tokenObj){//文件上传配置
+    let {token} = tokenObj;
     let upload = multer({
         dest: req.userUploadDir,
     });

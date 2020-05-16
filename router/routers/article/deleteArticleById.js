@@ -12,16 +12,16 @@
 */
 const articles = require("../../../mongo/models/articles");
 const err_logs = require("../../../mongo/models/err_logs");
-const { isObjectId } = require("../../../public/type_verify");
+const { isObjectId } = require("../../../util/TypeVerift");
 
-module.exports = async function (req,res) {
+module.exports = async function (req,res,tokenObj) {
     try {
         let {id} = req.body;
         if(isObjectId(id)){//id合法
             //数据是宝贵的，暂时别删除。把文章状态修改为2
             let DelArtDoc = await articles.findByIdAndUpdate(id,{$set:{state:2}});
             if(DelArtDoc){//结果判空
-                await res.json({code:200, msg:"删除成功", datas:[DelArtDoc],token:req.tokenObj.token});
+                await res.json({code:200, msg:"删除成功", datas:[DelArtDoc],token:tokenObj.token});
             }else{
                 await res.json({code:801, msg:"该文章不存在", datas:[]});
             }

@@ -20,18 +20,20 @@ const articles = require("../../../mongo/models/articles");
 const err_logs = require("../../../mongo/models/err_logs");
 const tags = require("../../../mongo/models/tags");
 const categorys = require("../../../mongo/models/categorys");
-const {isObjectId} = require("../../../public/type_verify");
+const {isObjectId} = require("../../../util/TypeVerift");
 
-module.exports = async function (req,res) {
+module.exports = async function (req,res,tokenObj) {
     try {
         let {title, thumbnail, synopsis, author, content,category,tag} = req.body;//接收请求数据
-        title = title.trim();
-        synopsis = synopsis.trim();
         if(!(title&&thumbnail&&synopsis&&author&&content&&category&&tag)
             || !Array.isArray(tag)
             || !isObjectId(author)
             || !isObjectId(category)
             || !isObjectId(tag)) {//验证请求数据是否齐全(全部为true结构为发false)
+/*            if(title && synopsis){
+                title = title.trim();
+                synopsis = synopsis.trim();
+            }
             if(!title){
                 return res.json({code:901, msg: "文章标题不能为空", datas: []})
             }else if(!thumbnail){
@@ -60,11 +62,11 @@ module.exports = async function (req,res) {
                 return res.json({code:913, msg: "这不是一个合法的标签id", datas: []})
             }else {
                 return res.json({code:914, msg: "参数格式不满足", datas: []})
-            }
+            }*/
         }else {
             //验证标题是否存在
             if(await articles.findOne({title})){
-                return res.json({code:802, msg:"标题已经存在", datas: [],token:req.tokenObj.token})
+                return res.json({code:802, msg:"标题已经存在", datas: [], token:tokenObj.token})
             }
             //查证分类和标签是否存在
             let tagDoc = await tags.find({_id: tag},{_id:true});

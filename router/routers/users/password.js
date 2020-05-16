@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
       return res.send({code: 403, msg: '您还未登陆', datas: []});
     }
     //解析token
-    let tokenObj = await require("../../token").verify(req.headers.token);
+    let tokenObj = await require("../../../util/token").verify(req.headers.token);
     if (tokenObj) {
       //获取token解析结果中当前用户id并修改密码
       const userId = await tokenObj.userInfo._id;
@@ -28,7 +28,7 @@ module.exports = async (req, res) => {
           {$set: {password: md5(new_password)}})
       if (result) {
         //初始化一个token
-        let token = require("../../token").init({username:result.username, password: result.password})
+        let token = require("../../../util/token").init(result.username, result.password)
         result = result.toObject()
         delete result.password;
         return res.send({code: 200, msg: '修改成功', datas: [result], token});

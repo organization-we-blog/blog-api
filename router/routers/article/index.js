@@ -2,7 +2,7 @@ const express = require("express");
 let multer  = require('multer');
 let upload = multer({ dest: 'public/uploads' });
 const router = express.Router();
-const {isAdmin} = require("../../token");
+const {filterRole} = require("../../../util/token");
 
 // 图片文件上传（all）
 router.post('/upload', upload.single('avatar'), function (req, res) {
@@ -10,47 +10,30 @@ router.post('/upload', upload.single('avatar'), function (req, res) {
 });
 
 // 添加文章（admin）
-router.post("/article/addArticle",function (req, res) {
-    isAdmin(req, res, require("./addArticle.js"));
-});
+router.post("/article/addArticle", filterRole(["admin"],require("./addArticle.js")));
 //添加文章分类（admin）
-router.post("/article/addArticlecates",function (req, res) {
-    isAdmin(req, res, require("./addArticlecates.js"));
-});
+router.post("/article/addArticlecates",filterRole("admin", require("./addArticlecates.js")));
 //添加文章标签（admin）
-router.post("/article/addArticleTag",function (req, res) {
-    isAdmin(req, res, require("./addArticleTag.js"));
-});
+router.post("/article/addArticleTag",filterRole("admin", require("./addArticleTag.js")));
 //删除文章（admin）
-router.post("/article/deleteArticleById",function (req, res) {
-    isAdmin(req, res, require("./deleteArticleById.js"));
-});
+router.post("/article/deleteArticleById",filterRole("admin", require("./deleteArticleById.js")) );
 //获取所有文章基础信息，不包含content（all）
-router.post("/article/getAllArticle",function (req, res) {
-    require("./getAllArticle.js")(req, res);
-});
+router.post("/article/getAllArticle",require("./getAllArticle.js"));
 //文章内容中的图片上传（admin）
 router.post('/article/uploadArticleContentImg', function (req, res) {
     req.userUploadDir = "./uploads/ArticleContents/";
-    isAdmin(req, res, require("./uploadImg.js"));
+    filterRole("admin", require("./uploadImg.js"))(req, res);
 });
 //文章缩略图的图片上传（admin）
 router.post('/article/uploadArticleThumbnailImg', function (req, res) {
     req.userUploadDir = "./uploads/ArticleThumbnails/";
-    isAdmin(req, res, require("./uploadImg.js"));
+    filterRole("admin", require("./uploadImg.js"))(req, res);
 });
 //获取所有标签和分类信息（all）
-router.post('/article/getAllTagAndCategory', function (req, res) {
-    require("./getAllTagAndCategory.js")(req, res);
-});
-
-/*router.post("/article/!*",function (req, res) {//添加文章（规划中）
-    res.json({msg:"维护"})
-});*/
+router.post('/article/getAllTagAndCategory', require("./getAllTagAndCategory.js"));
 
 
-router.post("/article/test",function (req, res) {//测试
-    require("./test.js")(req, res);
-});
+//测试用
+router.post("/article/test",require("./test.js"));
 
 module.exports = router;

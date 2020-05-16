@@ -15,7 +15,7 @@
 const tags = require("../../../mongo/models/tags");
 const err_logs = require("../../../mongo/models/err_logs");
 
-module.exports = async function(req,res){
+module.exports = async function(req,res,tokenObj){
     try {
         let {tagName,tagColor} = req.body;
         tagName = tagName.trim();
@@ -31,12 +31,12 @@ module.exports = async function(req,res){
         } else{
             //验证标签名是否已经存在
             if(await tags.findOne({tagName})){
-                return res.json({code:801, msg: "标签名已经存在", datas: [],token:req.tokenObj.token})
+                return res.json({code:801, msg: "标签名已经存在", datas: [],token:tokenObj.token})
             }else {
                 //保存标签
                 let tagDoc = new tags({tagName,tagColor});
                 let doc = await tagDoc.save();
-                await res.json({code:200, msg: "添加成功", datas: [doc],token:req.tokenObj.token})
+                await res.json({code:200, msg: "添加成功", datas: [doc],token:tokenObj.token})
             }
         }
     }catch (e) {

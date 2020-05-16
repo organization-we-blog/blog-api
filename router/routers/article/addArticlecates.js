@@ -13,7 +13,7 @@
 const categorys = require("../../../mongo/models/categorys");
 const err_logs = require("../../../mongo/models/err_logs");
 
-module.exports = async function(req,res){
+module.exports = async function(req,res,tokenObj){
     try {
         let {className} = req.body;
         className = className.trim();
@@ -23,11 +23,11 @@ module.exports = async function(req,res){
             return res.json({code:902, msg: "分类名字长度只能在2-20之间", datas: []});
         }else{
             if(await categorys.findOne({className})){
-                return res.json({code:801, msg: "分类名已经存在", datas: [],token:req.tokenObj.token})
+                return res.json({code:801, msg: "分类名已经存在", datas: [],token:tokenObj.token})
             } else {
                 let categoryDoc = new categorys({className});
                 let doc = await categoryDoc.save();
-                await res.json({code:200, msg: "添加成功", datas: [doc],token:req.tokenObj.token})
+                await res.json({code:200, msg: "添加成功", datas: [doc],token:tokenObj.token})
             }
         }
     }catch (e) {
