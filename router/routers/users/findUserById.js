@@ -16,7 +16,6 @@ module.exports = async (req, res) => {
   // 通过验证
   // 查询用户信息
   const user = await UserModel.findById(id).select('-password');
-    console.log(user);
     if(user){
       // 响应
       return res.send({ code: 200, msg: '查询用户成功', datas: user });

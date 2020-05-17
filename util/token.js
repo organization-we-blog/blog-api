@@ -1,4 +1,3 @@
-//验证token
 const users = require("../mongo/models/users");
 const JWT = require("jsonwebtoken");
 //公钥
@@ -64,7 +63,7 @@ token.init = function (username, password) {
 token.filterRole = function(roles, callback){
     //过滤用户角色,只允许roles(string|array)中的角色通过,返回一个function (req, res)函数
     /**
-     * @Description: 验证当前用户是否拥有指定权限,如果拥有权限会执行callback(req, res),如果没有admin权限会自动响应
+     * @Description: 验证当前用户是否拥有指定权限,如果拥有权限会执行callback(req, res),如果没有权限会自动响应
      * @params roles  [string|array]允许通过的角色
      * @params callback   当拥有admin权限时执行的回调
      * @returns function (req, res)

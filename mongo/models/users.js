@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
     username: { type: String, required: true, minlength: 2, maxlength: 20 },// 用户名
     password: { type: String, required: true}, // 密码
     email: { type: String },// 邮箱
-    gender: { type: String, default: '男', enum: ['男', '女', '保密'] }, // 性别
+    gender: { type: String, default: '保密', enum: ['男', '女', '保密'] }, // 性别
     avatar: { type: String, default: null }, // 头像
     info: { type: String, maxlength: 200}, // 个人信息/签名
     createTime: { type: Date, default: Date.now },// 创建时间
