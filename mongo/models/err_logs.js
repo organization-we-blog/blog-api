@@ -10,7 +10,8 @@ const err_log = new Schema({
     err_msg: String,//错误信息
     req_data: String,//访问携带的数据
     err_file: String,//错误所在文件
-    err_status: {type:Number, default: 0},//错误状态
+    err_status: {type:Number, default: 0},//错误状态(0:未解决,1:已解决，2:排查中),
+    principal: {type: String, default: null}//该错误的负责人、处理人
 });
 
 let err_logs = mongoose.model('err_logs', err_log);

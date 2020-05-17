@@ -5,8 +5,8 @@ const CommentSchema = new mongoose.Schema({
   author: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true },  // 评论人
   content: { type: String, minlength: 1, required: true }, //评论内容
   post: { type: mongoose.Schema.Types.ObjectId, ref: 'articles', required: [true, '评论文章id不存在'] }, // 评论文章
-  // 0 未批准 1 批准
-  state: { type: Number, default: 0 }, // 评论状态
+  //状态（1：正常，2: 已删除,3:待审核）
+  state: { type: Number, default: 1 },
   createTime: { type: Date, default: Date.now } // 评论时间
 })
 
