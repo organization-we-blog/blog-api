@@ -3,11 +3,13 @@ const users = require('./routers/users/index') // 用户接口
 const slide = require('./routers/slide/index') // 轮播图接口
 const setting = require('./routers/settings/index') // 网站设置
 const comment = require('./routers/comments/index') // 评论相关
+const errLog = require('./routers/errlog/index')//错误相关
 
 
-exports.article = article;
+exports.article = article
 exports.users = users
 exports.slide = slide
 exports.setting = setting
 exports.comment = comment
+exports.errLog = errLog
 

@@ -8,7 +8,6 @@ const {filterRole} = require("../../../util/token");
 router.post('/upload', upload.single('avatar'), function (req, res) {
     require("./upload.js")(req, res);
 });
-
 // 添加文章（admin）
 router.post("/article/addArticle", filterRole(["admin"],require("./addArticle.js")));
 //添加文章分类（admin）

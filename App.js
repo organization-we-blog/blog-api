@@ -32,13 +32,14 @@ app.use("*", function (req, res, next) {
 app.use('/public/', express.static('./public/'));
 app.use('/uploads/', express.static('./uploads/'));
 
-const { article, users, slide, setting,comment } = require("./router");
+const { article, users, slide, setting,comment, errLog } = require("./router");
 //挂载路由
 app.use(article);
 app.use(users);
 app.use(slide);
 app.use(setting);
 app.use(comment);
+app.use(errLog);
 
 app.use("*", function (req, res) {//404
     res.statusCode = 404;
@@ -46,6 +47,6 @@ app.use("*", function (req, res) {//404
 });
 
 app.listen(3002, () => {
-    console.log("服务器启动成功,127.0.0.1:3002");
+    console.log("server running at http://127.0.0.1:3002");
 });
 
