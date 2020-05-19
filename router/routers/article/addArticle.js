@@ -30,7 +30,7 @@ module.exports = async function (req,res,tokenObj) {
             || !isObjectId(author)
             || !isObjectId(category)
             || !isObjectId(tag)) {//验证请求数据是否齐全(全部为true结构为发false)
-/*            if(title && synopsis){
+            if(title && synopsis){
                 title = title.trim();
                 synopsis = synopsis.trim();
             }
@@ -62,7 +62,7 @@ module.exports = async function (req,res,tokenObj) {
                 return res.json({code:913, msg: "这不是一个合法的标签id", datas: []})
             }else {
                 return res.json({code:914, msg: "参数格式不满足", datas: []})
-            }*/
+            }
         }else {
             //验证标题是否存在
             if(await articles.findOne({title})){
@@ -83,7 +83,7 @@ module.exports = async function (req,res,tokenObj) {
                 });
                 //插入文章
                 let newArticleDoc = await newArticle.save();
-                await res.json({code:200, msg:"添加成功", datas: [newArticleDoc],token:req.tokenObj.token})
+                await res.json({code:200, msg:"添加成功", datas: [newArticleDoc],token:tokenObj.token})
             }else{//标签或者分类无效
                 await res.json({code:801,msg: "标签或分类不存在",datas: []});
             }

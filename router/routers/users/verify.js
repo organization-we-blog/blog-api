@@ -51,6 +51,6 @@ module.exports = async function (req,res) {
         }
     }catch (e) {
         res.json({code: 500, msg: "服务器繁忙", datas: []})
-        require("../../../mongo/models/err_logs").addErrLog(req,e,__filename);
+        err_logs.addErrLog(req,e,__filename);
     }
 }
