@@ -18,9 +18,13 @@ module.exports = async (req, res, tokenObj) => {
   if (!exist)
     return res.json({code: 802, msg: '更新失败，日志id不存在', data: []})
   //存在：判断是否有操作权限
-  
   const {url, err_msg, principal} = exist
-  if(tokenObj.userInfo._id !== principal || tokenObj.userInfo._id !== null)
+  // console.log(typeof principal);
+  // console.log(typeof tokenObj.userInfo._id);
+  // console.log(tokenObj.userInfo._id.toString() !== principal.toString());
+  console.log(principal !== null);
+  
+  if(principal !== null && tokenObj.userInfo._id.toString() !== principal.toString())
     return res.json({code: 403, msg:'对不起您没有此操作权限', data:[]})
   
   //修改所有错误信息与url相同的日志
