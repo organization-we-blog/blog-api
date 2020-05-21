@@ -6,9 +6,10 @@ module.exports = async (req, res, tokenObj) => {
   const {principalId, errLogId}= req.body;
   
   //验证id合法性
-  if(!isObjectId(principalId) && !isObjectId(errLogId))
-    return res.json({code: 902, msg: '传入id不合法'})
-  
+  if(!isObjectId(principalId))
+    return res.json({code: 902, msg: '负责人id不合法', data: []})
+  if(!isObjectId(errLogId))
+    return res.json({code: 902, msg: '日志id不合法', data: []})
   //判断日志是否存在
   const exist = await ErrLogModel.findOne({_id: errLogId})
   

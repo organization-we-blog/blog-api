@@ -17,13 +17,9 @@ module.exports = async (req, res, tokenObj) => {
   //不存在：返回错误信息
   if (!exist)
     return res.json({code: 802, msg: '更新失败，日志id不存在', data: []})
+  
   //存在：判断是否有操作权限
   const {url, err_msg, principal} = exist
-  // console.log(typeof principal);
-  // console.log(typeof tokenObj.userInfo._id);
-  // console.log(tokenObj.userInfo._id.toString() !== principal.toString());
-  console.log(principal !== null);
-  
   if(principal !== null && tokenObj.userInfo._id.toString() !== principal.toString())
     return res.json({code: 403, msg:'对不起您没有此操作权限', data:[]})
   

@@ -9,6 +9,6 @@ router.put('/errLog/updateErrLogById/:id', filterRole('admin', require('./update
 // router.put('/errLog/updateErrLogById/:id', require('./updateErrLogById'));
 
 //根据id修改错误日志负责人
-// router.put('/errLog/updatePrincipalById', filterRole('admin', require('./updatePrincipalById')) );
-router.put('/errLog/updatePrincipalById', require('./updatePrincipalById'));
+router.put('/errLog/updatePrincipalById', filterRole('admin', require('./updatePrincipalById')) );
+// router.put('/errLog/updatePrincipalById', require('./updatePrincipalById'));
 module.exports = router;
