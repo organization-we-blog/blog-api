@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
   if (!id) {
     return res.send({ code: 901, msg: '用户id不能为空', datas: [] })
   }
-  if(!isObjectId(id)){
+    if(!isObjectId(id)){
     return res.send({ code: 902, msg: '这不是一个合法的id', datas: [] })
   }
   // 通过验证

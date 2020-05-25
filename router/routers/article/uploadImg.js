@@ -15,9 +15,16 @@ let multer  = require('multer');
 
 module.exports = function(req,res,tokenObj){//文件上传配置
     let {token} = tokenObj;
-    let upload = multer({
-        dest: req.userUploadDir,
-    });
+    let storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, req.userUploadDir);
+        },
+        filename: function (req, file, cb) {
+            cb(null,`${parseInt(Math.random()*1000000)}${new Date().getTime()}.${file.mimetype.split("/")[1]}`);
+        }
+    })
+
+    let upload = multer({ storage: storage });
     //接收的参数名： file
     //dest：文件上传存储目录
     upload.single('file')(req, res, function (err) {
